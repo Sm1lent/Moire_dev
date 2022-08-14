@@ -125,6 +125,12 @@
       choosenMaterials(){
         this.loadProducts();
       },
+      choosenCategory(){
+        this.loadProducts();
+      },
+      choosenSeasons(){
+        this.loadProducts();
+      },
     },
     created(){
       this.loadProducts();

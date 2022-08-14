@@ -135,11 +135,17 @@
       },
       reset() {
         this.$emit('update:priceFrom', 0);
+        this.currentPriceFrom = 0;
         this.$emit('update:priceTo', 0);
+        this.currentPriceTo = 0;
         this.$emit('update:choosenCategory', {id: 0, title: 'Все товары'});
+        this.currentCategory = {id: 0, title: 'Все товары'};
         this.$emit('update:choosenColors', []);
+        this.currentColors = [];
         this.$emit('update:choosenMaterials', []);
+        this.currentMaterials = [];
         this.$emit('update:choosenSeasons', []);
+        this.currentSeasons =[];
       },
       loadCategories(){
         this.categoriesLoading = true;
