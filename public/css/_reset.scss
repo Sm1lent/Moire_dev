@@ -1,0 +1,68 @@
+html {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  -webkit-box-sizing: inherit;
+  box-sizing: inherit;
+  margin: 0;
+  padding: 0;
+  background: none;
+  border: none;
+  outline: none;
+  color: inherit;
+}
+
+a {
+  text-decoration: none;
+}
+
+a:focus,button:focus {
+  outline: none;
+}
+
+img {
+  max-width: 100%;
+}
+
+label,button,a {
+  cursor: pointer;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
+
+ul {
+  list-style-type: none;
+}
+
+li {
+  line-height: 1;
+}
+
+svg, a {
+  transition: color .25s ease-in-out;
+}
+
+picture {
+  font-size: 0;
+}
+
+.visually-hidden{
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  opacity: 0;
+  border: 0;
+  clip: rect(0 0 0 0);
+}

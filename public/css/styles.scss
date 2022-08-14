@@ -1,0 +1,260 @@
+@import '_reset';
+@import '_mixins';
+@import '_variables';
+@import '_fonts';
+
+:root {
+  --white: #fff;
+  --grey: #E9E9E9;
+  --darkgrey: #737373;
+  --pink: #E02D71;
+  --pale-pink: #FAFAFA;
+  --pale-border: #F2E4EA;
+  --black: #222222;
+  --note-color: #9D9D9D;
+  --focus-color: #E00071;
+  --hover-color: #CA7BD8;
+  --active-color: #920F41;
+  --inactive-page-num-color: #D1D1D1;
+  --pag-btn-color: #E2E2E2;
+  --trans-btn-color: #363636;
+  --btn-hover-color: #DEDEDE;
+  --btn-active-color: #150C26;
+}
+
+.body {
+  min-width:320px;
+  max-width: 100%;
+  min-height:100vh;
+  background-color:#fff;
+  font-family: 'Geometria';
+  color: var(--black);
+}
+
+.container {
+  width: calc(100vw - 270px);
+  max-width: 1770px;
+  margin: 0 auto;
+}
+
+.status-report {
+  display: block;
+  width: max-content;
+  margin: 30px auto;
+  font-size: 35px;
+}
+
+.link {
+  position: relative;
+  &::after {
+    position: absolute;
+    z-index: -1;
+    content: '';
+    inset: -3px;
+    background-color: transparent;
+    transition: background-color .25s ease-in-out;
+  }
+  &:focus-visible {
+    color: #fff;
+    &::after {
+      background-color: var(--pink)
+    }
+  }
+
+}
+
+@media screen and (any-hover: hover) {
+  .link:hover {
+    color: var(--black)
+  }
+  .link:hover:not(:focus-visible):not(:active) {
+    color: var(--pink)
+  }
+}
+.link:active {
+  color: #fff;
+  &::after {
+    background-color: var(--active-color)
+  }
+}
+
+.link-under {
+  position: relative;
+
+  &::after {
+    position: absolute;
+    content: '';
+    bottom: -3px;
+    left: 0;
+    height: 2px;
+    width: 100%;
+    background-color: var(--hover-color);
+    transition: transform .25s ease-in-out;
+    transform: scaleX(0);
+  }
+  &:focus-visible {
+    background-color: var(--pale-pink)    
+  }
+
+}
+
+@media screen and (any-hover: hover) {
+  .link-under:hover {
+    color: var(--hover-color);
+    &::after {
+      transform: scaleX(1);
+    }    
+  }
+}
+.link-under:active {
+  color: var(--active-color)  
+}
+
+
+
+.color {
+  position: relative;
+  padding: 3px;
+  width: max-content;
+  border-radius: 100%;
+
+  &__input {  
+    &:checked + .color__skin::after {
+      border-color: var(--black);
+    }
+    &:focus-visible + .color__skin::after {
+      border-color: var(--black);
+      border-width: 3px;
+    }
+  }
+
+  &__skin {
+    position: relative;
+    display: block;
+    width: 20px;
+    height: 20px;
+    border-radius: 100%;
+    border: 1px solid var(--darkgrey);
+    &::after {
+      content: '';
+      position: absolute;
+      inset: -3px;
+      border: 1px solid transparent;
+      border-radius: 100%;
+      transition: border-color .25s ease-in-out;
+    }
+  }
+}
+
+.square-check-list {
+  display: grid;
+  row-gap: 8px; 
+  justify-content: start; 
+}
+
+.square-check {
+  position: relative;
+  display: flex;
+  &::after {
+    position: absolute;
+    content: '';
+    inset: 0;
+    right: 20px;
+  }
+
+  &__skin {
+    position: relative;
+    width: 12px;
+    height: 12px;
+    margin-right: 15px;
+    align-self: center;
+    border: 1px solid var(--black);
+    transition: background-color .25s ease-in-out, border-color .25s ease-in-out;
+    &::after {
+      position: absolute;
+      content: '';
+      inset: 3px;
+      background-color: transparent;
+      transition: background-color .25s ease-in-out;
+    }
+  }
+
+  &__value {
+    margin-right: 6px;
+    font: 400 16px/24px 'Circe'; 
+    text-transform: lowercase;
+    pointer-events: none;
+    transition: color .25s ease-in-out;
+  }
+
+  &__amount {
+    color: var(--darkgrey);
+    font: 16px/24px Montserrat;
+    cursor: default;
+    pointer-events: none;
+  }
+}
+
+.square-check__input:checked + .square-check__skin::after {
+  background-color: var(--pink);
+}
+.square-check__input:focus-visible + .square-check__skin {
+  border-color: (var(--pink));
+}
+.square-check__input:focus-visible ~ .square-check__value {
+  text-decoration: underline var(--pink);
+}
+
+@media screen and (any-hover: hover) {
+  .square-check:hover {
+    .square-check__skin {
+      background-color: var(--pale-pink);
+    }
+    .square-check__value {
+      color: var(--pink);
+    }    
+  }
+}
+
+.btn {
+  padding: 15px 47px;
+  background-color: var(--pink);
+  color: var(--white);
+  font: 700 11px/20px Circe;
+  text-transform: uppercase;
+  border: 1px solid var(--pink);
+  transition: background-color .25s ease-in-out, border-color .25s ease-in-out, color .25s ease-in-out;
+  &:focus-visible {
+    border-color: var(--trans-btn-color);
+  }
+}
+
+.btn-primary {
+  padding: 19px 68px;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.btn-trans {
+  background-color: transparent;
+  color: var(--trans-btn-color);
+  border-color: var(--trans-btn-color);
+  &:focus-visible {
+    border-color: var(--pink);
+  }
+}
+
+@media screen and (any-hover: hover) {
+  .btn:hover {
+    color: var(--black);
+    background-color: var(--btn-hover-color);
+  }
+}
+
+.btn:active {
+  background-color: var(--btn-active-color);
+}
+
+.btn-trans:active {
+  color: var(--white);
+}
