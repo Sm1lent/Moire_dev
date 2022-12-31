@@ -1,71 +1,73 @@
 <!-- eslint-disable -->
 <template>
-  <form class="filters"  @submit.prevent="submit">
-    <fieldset class="filters__filter">
-      <legend class="filters__legend">Цена</legend>
-      <label class="filters__input-label">
-        <input class="filters__input common-text" type="number" name="min-price" v-model="currentPriceFrom">
-      </label>
-      <label class="filters__input-label">
-        <input class="filters__input common-text" type="number" name="max-price" v-model="currentPriceTo">
-      </label>
-    </fieldset>
+  <transition name="drop">
+    <form class="filters" v-show="show"  @submit.prevent="submit">
+      <fieldset class="filters__filter">
+        <legend class="filters__legend">Цена</legend>
+        <label class="filters__input-label">
+          <input class="filters__input common-text" type="number" name="min-price" v-model="currentPriceFrom">
+        </label>
+        <label class="filters__input-label">
+          <input class="filters__input common-text" type="number" name="max-price" v-model="currentPriceTo">
+        </label>
+      </fieldset>
 
-    <fieldset class="filters__filter">
-      <legend class="filters__legend">Категория</legend>
-      <select class=" visually-hidden" :value="currentCategory.title">
-        <option value="0">Все товары</option>
-        <option v-for="category in categories" :key="category.id">{{ category.title }}</option>
-      </select>
-    </fieldset>
-    <v-select v-model="currentCategory" :options="categories" label="title" />
+      <fieldset class="filters__filter">
+        <legend class="filters__legend">Категория</legend>
+        <select class=" visually-hidden" :value="currentCategory.title">
+          <option value="0">Все товары</option>
+          <option v-for="category in categories" :key="category.id">{{ category.title }}</option>
+        </select>
+      </fieldset>
+      <v-select v-model="currentCategory" :options="categories" label="title" />
 
-    <h2 v-if="colorsLoading">LOADING</h2>
-    <fieldset class="filters__filter" v-if="colorsData">
-      <legend class="filters__legend">Цвет</legend>
-      <ul class="filters__color-list color-list">
-        <li class="color-list__item" v-for="color in colors" :key="`color_${color.id}`">
-          <label class="color-list__color color">
-            <input class="color__input visually-hidden"  :value="color" v-model="currentColors" type="checkbox">
-            <span class="color__skin" :style="`background-color: ${color.code}`"></span>
-          </label>
-        </li>
-      </ul>
-    </fieldset>
+      <h2 v-if="colorsLoading">LOADING</h2>
+      <fieldset class="filters__filter" v-if="colorsData">
+        <legend class="filters__legend">Цвет</legend>
+        <ul class="filters__color-list color-list">
+          <li class="color-list__item" v-for="color in colors" :key="`color_${color.id}`">
+            <label class="color-list__color color">
+              <input class="color__input visually-hidden"  :value="color" v-model="currentColors" type="checkbox">
+              <span class="color__skin" :style="`background-color: ${color.code}`"></span>
+            </label>
+          </li>
+        </ul>
+      </fieldset>
 
-    <h2 v-if="materialsLoading">LOADING</h2>
-    <fieldset class="filters__filter" v-if="materialsData">
-      <legend class="filters__legend">Материал</legend>
-      <ul class="filters__material-list square-check-list">
-        <li class="material-list__item" v-for="material in materials" :key="`material_${material.id}`">
-          <label class="material-list__material square-check">
-            <input class="square-check__input visually-hidden" :value="material"  v-model="currentMaterials" type="checkbox">
-            <span class="square-check__skin"></span>
-            <span class="square-check__value">{{ material.title }}</span>
-            <span class="square-check__amount">({{ material.productsCount }})</span>
-          </label>
-        </li>
-      </ul>
-    </fieldset>
+      <h2 v-if="materialsLoading">LOADING</h2>
+      <fieldset class="filters__filter" v-if="materialsData">
+        <legend class="filters__legend">Материал</legend>
+        <ul class="filters__material-list square-check-list">
+          <li class="material-list__item" v-for="material in materials" :key="`material_${material.id}`">
+            <label class="material-list__material square-check">
+              <input class="square-check__input visually-hidden" :value="material"  v-model="currentMaterials" type="checkbox">
+              <span class="square-check__skin"></span>
+              <span class="square-check__value">{{ material.title }}</span>
+              <span class="square-check__amount">({{ material.productsCount }})</span>
+            </label>
+          </li>
+        </ul>
+      </fieldset>
 
-    <h2 v-if="seasonsLoading">LOADING</h2>
-    <fieldset class="filters__filter" v-if="seasonsData">
-      <legend class="filters__legend">Коллекция</legend>
-      <ul class="filters__material-list square-check-list">
-        <li class="material-list__item" v-for="season in seasons" :key="`season_${season.id}`">
-          <label class="material-list__material square-check">
-            <input class="square-check__input visually-hidden" :value="season"  v-model="currentSeasons" type="checkbox">
-            <span class="square-check__skin"></span>
-            <span class="square-check__value">{{ season.title }}</span>
-            <span class="square-check__amount">({{ season.productsCount }})</span>
-          </label>
-        </li>
-      </ul>
-    </fieldset>
+      <h2 v-if="seasonsLoading">LOADING</h2>
+      <fieldset class="filters__filter" v-if="seasonsData">
+        <legend class="filters__legend">Коллекция</legend>
+        <ul class="filters__material-list square-check-list">
+          <li class="material-list__item" v-for="season in seasons" :key="`season_${season.id}`">
+            <label class="material-list__material square-check">
+              <input class="square-check__input visually-hidden" :value="season"  v-model="currentSeasons" type="checkbox">
+              <span class="square-check__skin"></span>
+              <span class="square-check__value">{{ season.title }}</span>
+              <span class="square-check__amount">({{ season.productsCount }})</span>
+            </label>
+          </li>
+        </ul>
+      </fieldset>
 
-    <button class="btn btn-primary" type="submit">Применить</button>
-    <button class="btn btn-trans" @click.prevent="reset">сбросить</button>
-  </form>
+      <button class="btn btn-primary" type="submit">Применить</button>
+      <button v-if="isFilterActive" class="btn btn-trans" @click.prevent="reset">сбросить</button>
+    </form>
+  </transition>
 </template>
 
 <script>
@@ -77,6 +79,7 @@
     name: 'ProductFilter',
     components: {vSelect},
     props: {
+      show: Boolean,
       priceFrom: Number,
       priceTo: Number,
       choosenCategory: Object,
@@ -123,6 +126,18 @@
       seasons() {
         return this.seasonsData ? this.seasonsData.items : []
       },
+      isFilterActive() {
+        if(this.priceFrom !== 0 ||
+          this.priceTo !== 0 ||
+          this.choosenCategory.id !== 0 ||
+          this.choosenColors.length > 0 ||
+          this.choosenMaterials.length > 0 ||
+          this.choosenSeasons.length > 0) {
+          return true
+        } else {
+          return false
+        }
+      }
     },
     methods: {
       submit() {
@@ -134,18 +149,13 @@
         this.$emit('update:choosenSeasons', this.currentSeasons);
       },
       reset() {
-        this.$emit('update:priceFrom', 0);
         this.currentPriceFrom = 0;
-        this.$emit('update:priceTo', 0);
         this.currentPriceTo = 0;
-        this.$emit('update:choosenCategory', {id: 0, title: 'Все товары'});
         this.currentCategory = {id: 0, title: 'Все товары'};
-        this.$emit('update:choosenColors', []);
         this.currentColors = [];
-        this.$emit('update:choosenMaterials', []);
         this.currentMaterials = [];
-        this.$emit('update:choosenSeasons', []);
         this.currentSeasons =[];
+        this.submit()
       },
       loadCategories(){
         this.categoriesLoading = true;
@@ -201,6 +211,7 @@
     display: grid;
     grid-auto-rows: max-content;
     row-gap: 30px;
+    background-color: var(--white);
 
     &__legend {
       margin-bottom: 12px;
@@ -334,4 +345,17 @@
   z-index: 2;
 }
 
+@media (max-width: 1225px) {
+  .filters {
+    position: absolute;
+    z-index: 2;
+    top: 47px;
+    left: 0;
+    max-width: 100%;
+    grid-row: span 1;
+    padding: 20px;
+    border: 1px solid var(--info-border-color);
+    box-shadow: 0px 18px 52.8537px rgb(224 45 113 / 30%);
+  }
+}
 </style>

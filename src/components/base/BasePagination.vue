@@ -51,10 +51,7 @@
 
     &__pages {
       display: flex;
-    }
-
-    &__item:not(:last-child) {
-      margin-right: 30px;
+      gap: 30px;
     }
 
     &__link {
@@ -103,5 +100,19 @@
     }
   }
 
-
+  @media (max-width: 620px) {
+    .pagination {
+      &__pages {
+        gap: 15px;
+      }
+      &__link--arrow {
+        &:first-child {
+          margin-right: 24px;
+        }
+        &:last-child {
+          margin-left: 24px;
+        }
+      }
+    }
+  }
 </style>
