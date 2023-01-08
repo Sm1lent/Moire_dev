@@ -74,16 +74,6 @@
       filterControlText(){
         return this.isFilterHidden ? "Показать фильтры" : "Скрыть фильтры";
       },
-      choosenColorsIds(){
-        return this.choosenColors ? this.choosenColors.map(item => {
-          return item.id
-        }) : [];
-      },
-      choosenMaterialsIds(){
-        return this.choosenMaterials ?
-        this.choosenMaterials.map(item => {return item.id}) :
-        [];
-      },
     },
     methods: {
       updateProductsPerPage() {
@@ -119,11 +109,11 @@
         }, 0);
       },
       getIds(array){
-        let idList =[]
+        let idList =[];
         for(let item of array){
-          idList.push(item.id)
+          idList.push(item.id);
         }
-        return idList
+        return idList;
       },
       toggleFilter(){
         this.isFilterHidden = !this.isFilterHidden;

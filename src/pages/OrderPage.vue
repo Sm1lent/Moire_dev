@@ -39,7 +39,7 @@
         </label>
         <label class="order-page__field-label half-width empty">
           <span class="order-page__field-placeholder">Телефон</span>
-          <input class="order-page__field" :class="{ invalid: phoneError }" v-model.trim="phoneValue" @focus="resetPhoneError" @blur="setEmpty">
+          <input class="order-page__field" :class="{ invalid: phoneError }" v-model.trim="phoneValue" @focus="resetPhoneError" @blur="setEmpty" v-mask="'(###)-###-##-##'" id="phone-input">
           <span class="validation-error" v-if="phoneError">{{ phoneError }}</span>
         </label>
         <label class="order-page__field-label half-width empty">
@@ -89,11 +89,16 @@
 
 <script>
 /* eslint-disable */
+
 import axios from 'axios';
 import {API_BASE_URL} from '@/data/config';
 import OrderList from '@/components/order/OrderList';
 import {mapGetters, mapMutations} from 'vuex';
 import numberFormat from '@/helpers/numberFormat';
+import Vue from 'vue';
+import VueMask from 'v-mask';
+Vue.use(VueMask);
+
   export default {
     name: 'order-page',
     components: {OrderList},
@@ -180,12 +185,20 @@ import numberFormat from '@/helpers/numberFormat';
           this.addressError = "Заполните поле";
         }
 
+        function unmask(value) {
+          let num = [];
+          for (let i = 0; i < value.length; i++) {
+            if(!isNaN(Number(value[i]))) num.push(value[i]);
+          }
+          console.log(num)
+          return num
+        }
+        const phoneNumber = unmask(this.phoneValue);
+
         if(this.phoneValue === "") {
-          this.phoneError = "Заполните поле";
-        } else if (this.phoneValue.length !== 10) {
-          this.phoneError = "введите номер в 10-значном формате";
-        } else if (!this.phoneValue.match(numbers)) {
-          this.phoneError = "допустимы только цифры";
+        this.phoneError = "Заполните поле";
+        } else if (phoneNumber.length !== 10) {
+           this.phoneError = "введите номер в 10-значном формате";
         }
 
         if(this.emailValue === "") {
