@@ -350,7 +350,7 @@
   .filters {
     position: absolute;
     z-index: 2;
-    top: 47px;
+    top: 160px;
     left: 0;
     max-width: 100%;
     grid-row: span 1;

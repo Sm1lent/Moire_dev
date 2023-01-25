@@ -64,7 +64,8 @@
             quantity: 1
           })
           .then((response) => {
-            this.productAddSendingError = response ? false :  true;
+            this.errorMessage = "Товар добавлен в корзину."
+            this.productAddSendingError = true;
             this.productAddSending = false;
           })
           .catch(() => {
