@@ -6,7 +6,7 @@
       <span class="catalog__products-quantity">{{productsQuantity}} {{quantityNaming}}</span>
       <button class="catalog__filter-control btn btn-primary" @click="toggleFilter">{{ filterControlText }}</button>
     </div>
-    <ProductFilter :show="!isFilterHidden" :price-from.sync="filterPriceFrom" :price-to.sync="filterPriceTo" :choosen-category.sync="choosenCategory" :choosen-colors.sync="choosenColors" :choosen-materials.sync="choosenMaterials" :choosen-seasons.sync="choosenSeasons" />
+    <ProductFilter v-if="choosenCategory" :show="!isFilterHidden" :price-from.sync="filterPriceFrom" :price-to.sync="filterPriceTo" :choosen-category.sync="choosenCategory" :choosen-colors.sync="choosenColors" :choosen-materials.sync="choosenMaterials" :choosen-seasons.sync="choosenSeasons" />
     <BaseSpinner v-if="productsLoading" />
     <ProductList v-if="productsData" :products="products" />
     <h2 class="status-report" v-if="productsLoadingFailed">Извините, загрузить товары не удалось</h2>
@@ -37,17 +37,18 @@
         productsPerPage: 12,
         filterPriceFrom: 0,
         filterPriceTo: 0,
-        choosenCategory: {id: 0, title: 'Все товары'},
+        choosenCategory: null,
         choosenColors: [],
         choosenMaterials: [],
         choosenSeasons: [],
 
         isFilterHidden: false,
 
+        categoriesData: null,
+
         productsData: null,
         productsLoading: false,
         productsLoadingFailed: false,
-
       };
     },
     computed: {
@@ -76,6 +77,15 @@
       },
     },
     methods: {
+      onResize() {
+        this.updateProductsPerPage();
+        const viewport = document.body.offsetWidth;
+        if (viewport > 1225) {
+          this.isFilterHidden = false;
+        } else {
+          this.isFilterHidden = true;
+        }
+      },
       updateProductsPerPage() {
         const viewport = document.body.offsetWidth;
         if (viewport > 1550) {
@@ -118,6 +128,14 @@
       toggleFilter(){
         this.isFilterHidden = !this.isFilterHidden;
       },
+      setCategories(id){
+        axios.get(API_BASE_URL + '/api/productCategories')
+        .then(response => {
+          this.categoriesData = response.data.items;
+          this.choosenCategory = this.categoriesData.find(item => item.id === id);
+        })
+        .catch(() => console.log("категории не загрузились"));
+      },
     },
     watch: {
       productsPerPage(){
@@ -146,17 +164,18 @@
       },
     },
     created(){
+      const anchorCategory = this.$route.query.id;
+      if (anchorCategory) {
+        this.setCategories(Number(anchorCategory));
+      } else {
+        this.choosenCategory = {id: 0, title: 'Все товары'};
+      }
       this.updateProductsPerPage();
       this.loadProducts();
-      window.addEventListener('resize', ()=> {
-        this.updateProductsPerPage();
-        const viewport = document.body.offsetWidth;
-        if (viewport > 1225) {
-          this.isFilterHidden = false;
-        } else {
-          this.isFilterHidden = true;
-        }
-      })
+      document.addEventListener('resize', this.onResize)
+    },
+    beforeDestroy() {
+      document.removeEventListener('resize', this.onResize)
     }
 	}
 </script>

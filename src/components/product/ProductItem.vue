@@ -2,10 +2,10 @@
 <template>
   <li class="catalog__card-wrap">
     <article class="catalog__card product">
-      <img class="product__img" :src="getImage()" :alt="product.title">
-      <router-link class="product__link link-under" href="#" :to="{name: 'product', params: {id: product.id}}">
-        <h2 class="bigger-font">{{ product.title }}</h2>
+      <router-link class="product__link" href="#" :to="{name: 'product', params: {id: product.id}}">
+        <img class="product__img" :src="getImage()" :alt="product.title">
       </router-link>
+      <h2 class="product__title bigger-font">{{ product.title }}</h2>
       <div class="product__options">
         <span class="product__price">{{ product.price | numberFormat }} ₽</span>
         <fieldset class="product__colors">
@@ -98,14 +98,32 @@
     padding: 15px;
     box-shadow: 0px 18px 52.8537px rgb(224 45 113 / 30%);
 
-    &__img {
-      max-width: unset;
+    &__link {
+      position: relative;
       width: calc(100% + 30px);
-      margin: -15px -15px 10px;
+      margin: -15px -15px 0;
+      cursor: pointer;
+
+      &::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-color: #fff;
+        opacity: 0;
+        transition: opacity .25s ease-in-out;
+      }
+      &:hover::after {
+        opacity: .3;
+      }
+    }
+
+    &__img {
+      display: block;
+      width: 100%;
       aspect-ratio: 317 / 411;
     }
 
-    &__link {
+    &__title {
       justify-self: start;
     }
 
@@ -129,7 +147,6 @@
       justify-content: start;
       gap: 4px;
     }
-
   }
 
   @media (max-width: 620px) {

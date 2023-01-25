@@ -20,7 +20,7 @@
         </span>
       </li>
       <li class="breadcrumbs__item">
-        <router-link class="link-under common-font" :to="{name: 'catalog'}" href="#">
+        <router-link class="link-under common-font" :to="{name: 'catalog', query: {id: category.id}}" href="#">
           {{ category.title }}
         </router-link>
       </li>
@@ -105,7 +105,7 @@
         <h3 class="productblock__attribute">Доставка:</h3>
         <ul class="productblock__values">
           <li class="productblock__value" v-for="deliver in deliverData" :key="`deliver_${deliver.id}`"> {{deliver.title}}	&#x20; &mdash; 	&#x20; {{deliver.price}} 	&#x20; ₽</li>
-          <li class="productblock__value">Список и адреса магазинов Вы можете посмотреть <a class="addresses-link link" href="#">здесь</a></li>
+          <li class="productblock__value">Список и адреса магазинов Вы можете посмотреть&nbsp;<a class="addresses-link link" href="#">здесь</a></li>
         </ul>
       </div>
 
@@ -116,7 +116,7 @@
           <li  class="productblock__value">Возвраты в магазине БЕСПЛАТНО.</li>
           <li  class="productblock__value">Вы можете вернуть товары в любой магазин. Магазин должен быть расположен в стране, в которой Вы осуществили покупку.</li>
           <li  class="productblock__value">БЕСПЛАТНЫЙ возврат в Пункт выдачи заказов.</li>
-          <li  class="productblock__value">Для того чтобы вернуть товар в одном из наших Пунктов выдачи заказов, позвоните по телефону <a class="link" href="tel:88006009009">8 800 600 90 09</a></li>
+          <li  class="productblock__value">Для того чтобы вернуть товар в одном из наших Пунктов выдачи заказов, позвоните по телефону:&nbsp; <a class="link" href="tel:88006009009">8 800 600 90 09</a></li>
         </ul>
       </div>
     </div>
@@ -329,6 +329,7 @@
 
     &__info-btns {
       grid-column: span 2;
+      display: flex;
       padding-bottom: 16px;
       border-bottom: 1px solid var(--info-border-color);
     }
@@ -386,6 +387,7 @@
     }
 
     &__value {
+      display: flex;
       font-size: 16px;
       line-height: 28px;
     }

@@ -62,6 +62,9 @@
         font-weight: 700;
         color: var(--black)
       }
+      &--disabled {
+        pointer-events: none;
+      }
 
       &--arrow {
         position: relative;
@@ -93,9 +96,7 @@
             border-color: var(--black);
           }
         }
-        .pagination__link--disabled {
-          pointer-events: none;
-        }
+
       }
     }
   }

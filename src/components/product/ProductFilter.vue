@@ -197,6 +197,7 @@
       },
     },
     created(){
+      this.currentCategory = this.choosenCategory;
       this.loadCategories();
       this.loadColors();
       this.loadMaterials();
@@ -345,7 +346,7 @@
   z-index: 2;
 }
 
-@media (max-width: 1225px) {
+@media(max-width: 1225px) {
   .filters {
     position: absolute;
     z-index: 2;
